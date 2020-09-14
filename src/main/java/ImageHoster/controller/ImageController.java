@@ -54,6 +54,8 @@ public class ImageController {
         Image image = imageService.getImage(id);
         model.addAttribute("image", image);
         model.addAttribute("tags", image.getTags());
+        model.addAttribute("comments",image.getComments());
+
         return "images/image";
     }
 
@@ -114,6 +116,8 @@ public class ImageController {
             model.addAttribute("image", image);
             model.addAttribute("tags", image.getTags());
             model.addAttribute("editError", editError);
+            model.addAttribute("comments",image.getComments());
+
             return "images/image";
         }
     }
@@ -173,6 +177,8 @@ public class ImageController {
             model.addAttribute("image", image);
             model.addAttribute("tags", image.getTags());
             model.addAttribute("deleteError", deleteError);
+            model.addAttribute("comments",image.getComments());
+
             return "images/image";
         }
     }
