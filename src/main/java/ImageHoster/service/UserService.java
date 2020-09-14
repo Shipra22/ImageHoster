@@ -5,6 +5,9 @@ import ImageHoster.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 public class UserService {
 
@@ -32,4 +35,21 @@ public class UserService {
         }
     }
 
+    //check password that it contains atleast one number one character one alphabet
+    public boolean checkPassword(User user) {
+        boolean passwordFlag = false;
+
+        Pattern pattern;
+        Matcher matcher;
+
+        String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{3,}$";
+
+        pattern = Pattern.compile(passwordPattern);
+        matcher = pattern.matcher(user.getPassword());
+
+        if(matcher.matches())
+            passwordFlag = true;
+
+        return passwordFlag;
+    }
 }

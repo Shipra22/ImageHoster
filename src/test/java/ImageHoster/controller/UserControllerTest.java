@@ -1,8 +1,9 @@
-/*
+
 package ImageHoster.controller;
 
 import ImageHoster.model.User;
 import ImageHoster.model.UserProfile;
+import ImageHoster.service.CommentService;
 import ImageHoster.service.ImageService;
 import ImageHoster.service.UserService;
 import org.junit.Test;
@@ -37,6 +38,9 @@ public class UserControllerTest {
     @MockBean
     private ImageService imageService;
 
+    @MockBean
+    private CommentService commentService;
+
     //This test checks the controller logic for user signup when user requests for a registration form and checks whether the logic returns the html file 'users/registration.html'
     @Test
     public void signupWithGetRequest() throws Exception {
@@ -62,7 +66,7 @@ public class UserControllerTest {
 
 
         this.mockMvc.perform(post("/users/registration")
-                .flashAttr("user", user)
+                .flashAttr("User", user)
         )
                 .andExpect(model().attribute("passwordTypeError", equalTo("Password must contain atleast 1 alphabet, 1 number & 1 special character")));
     }
@@ -81,9 +85,11 @@ public class UserControllerTest {
         user.setUsername("Abhi");
         user.setPassword("password1@");
 
+        Mockito.when(userService.checkPassword(Mockito.anyObject())).thenReturn(true);
+        session = new MockHttpSession();
 
         this.mockMvc.perform(post("/users/registration")
-                .flashAttr("user", user)
+                .flashAttr("User", user)
         )
                 .andExpect(view().name("users/login"))
                 .andExpect(content().string(containsString("Please Login:")));
@@ -167,4 +173,4 @@ public class UserControllerTest {
                 .andExpect(content().string(containsString("Image Hoster")));
     }
 }
-*/
+
